@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 Questions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+            width: 20%;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        button {
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #response, #status {
+            margin-top: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        async function sendRequest(id) {
+            let formData = new FormData();
+            formData.append("id", id);
+            
+            try {
+                let response = await fetch("/api/send_request", { 
+                    method: "POST", 
+                    body: formData 
+                });
+                let data = await response.json();
+                document.getElementById("status-" + id).innerText = data.status;
+                document.getElementById("response").innerText = JSON.stringify(data.response, null, 2);
+            } catch (error) {
+                document.getElementById("status-" + id).innerText = "Error: " + error;
+            }
+        }
+
+        async function fetchQuestions() {
+            let response = await fetch("/api/get_questions");
+            let questions = await response.json();
+            let container = document.getElementById("questions-body");
+            container.innerHTML = "";
+    
+            questions.forEach(q => {
+                let row = `
+                    <tr>
+                        <td>${q.id}</td>
+                        <td>${q.question}</td>
+                        <td>${q.filepath || 'N/A'}</td>
+                        <td>
+                            <button class="test-button" data-id="${q.id}">
+                                Test
+                            </button>
+                        </td>
+                        <td id="status-${q.id}">-</td>
+                    </tr>
+                `;
+                container.innerHTML += row;
+            });
+
+            // Attach event listeners to buttons dynamically
+            document.querySelectorAll(".test-button").forEach(button => {
+                button.addEventListener("click", function() {
+                    sendRequest(this.getAttribute("data-id"));
+                });
+            });
+        }
+    
+        function testAll() {
+            document.querySelectorAll(".test-button").forEach(btn => btn.click());
+        }
+
+        document.addEventListener("DOMContentLoaded", fetchQuestions);
+    </script>
+</head>
+<body>
+    <h2>A1 Questions</h2>
+    <button onclick="testAll()">Test All</button>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>File Path</th>
+                <th>Test</th>
+                <th>Test Status</th>
+            </tr>
+        </thead>
+        <tbody id="questions-body"></tbody>
+    </table>
+    <div id="response"></div>
+</body>
+</html>

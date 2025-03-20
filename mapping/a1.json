@@ -1,0 +1,74 @@
+{
+    "q-compare-files": {
+      "answer": "36",
+      "question": "Download q-compare-files .zip and extract it. It has 2 nearly identical files, a.txt and b.txt , with the same number of lines. How many lines are different between a.txt and b.txt ?"
+    },
+    "q-count-wednesdays": {
+      "answer": "1509",
+      "question": "How many Wednesdays are there in the date range 1988-07-14 to 2017-06-18 ?"
+    },
+    "q-css-selectors": {
+      "answer": "240",
+      "question": "Let's make sure you know how to select elements using CSS selectors. Find all <div> s having a foo class in the hidden element below. What's the sum of their data-value attributes? Sum of data-value attributes:"
+    },
+    "q-extract-csv-zip": {
+      "answer": "f32e1",
+      "question": "Download and unzip file q-extract-csv-zip .zip which has a single extract.csv file inside. What is the value in the \"answer\" column of the CSV file?"
+    },
+    "q-list-files-attributes": {
+      "answer": "233418",
+      "question": "Download q-list-files-attributes .zip and extract it. Use ls with options to list all files in the folder along with their date and file size. What's the total size of all files at least 5463 bytes large and modified on or after Sun, 23 Sept, 2007, 10:30 pm IST ?"
+    },
+    "q-move-rename-files": {
+      "answer": "8a6efb1ab93e972d3bbd5c19542918a4f983fe9478c8416ef3e77ba6be82717a",
+      "question": "Download q-move-rename-files .zip and extract it. Use mv to move all files under folders into an empty folder. Then rename all files replacing each digit with the next. 1 becomes 2, 9 becomes 0, a1b9c.txt becomes a2b0c.txt . What does running grep . * | LC_ALL=C sort | sha256sum in bash on that folder show?"
+    },
+    "q-multi-cursor-json": {
+      "answer": "a7219a1532892763d2168fbdd9c449e0bf89052cf5f3f9e8daaff3ac3c441276",
+      "question": "Download q-multi-cursor-json .txt and use multi-cursors and convert it into a single JSON object, where key=value pairs are converted into {key: value, key: value, ...} . What's the result when you paste the JSON at tools-in-data-science.pages.dev/jsonhash and click the Hash button?"
+    },
+    "q-npx-prettier": {
+      "answer": "5845e8737ebfb8dcc755700f2798feec599fc13d14a9aad95f72f70665aad026",
+      "question": "Let's make sure you know how to use npx and prettier . Download README.md . In the directory where you downloaded it, make sure it is called README.md , and run npx -y prettier@3.4.2 README.md | sha256sum . What is the output of the command?"
+    },
+    "q-replace-across-files": {
+      "answer": "daf32d4502caa4f89ca18e9adf5e81fbe0b30bdb1c606f0a603302c8aff4c39c",
+      "question": "Download q-replace-across-files .zip and unzip it into a new folder, then replace all \"IITM\" (in upper, lower, or mixed case) with \"IIT Madras\" in all files . Leave everything as-is - don't change the line endings . What does running cat * | sha256sum in that folder show in bash?"
+    },
+    "q-sql-ticket-sales": {
+      "answer": "select sum(units*price) from tickets where lower(trim(type)) = 'gold';",
+      "question": "There is a tickets table in a SQLite database that has columns type , units , and price . Each row is a customer bid for a concert ticket. type units price SILVER 251 1.57 Gold 214 1.38 SILVER 718 1.49 silver 391 1.27 bronze 903 1.08 ... What is the total sales of all the items in the \"Gold\" ticket type? Write SQL to calculate it."
+    },
+    "q-unicode-data": {
+      "answer": "42429",
+      "question": "Download and process the files in q-unicode-data .zip which contains three files with different encodings: data1.csv : CSV file encoded in CP-1252 data2.csv : CSV file encoded in UTF-8 data3.txt : Tab-separated file encoded in UTF-16 Each file has 2 columns: symbol and value. Sum up all the values where the symbol matches ‡ OR ˆ OR š across all three files. What is the sum of all values associated with these symbols?"
+    },
+    "q-use-devtools": {
+      "answer": "lxvst0ywjc",
+      "question": "Just above this paragraph, there's a hidden input with a secret value. What is the value in the hidden input?"
+    },
+    "q-use-excel": {
+      "answer": "63",
+      "question": "Let's make sure you can write formulas in Excel. Type this formula into Excel. Note: This will ONLY work in Office 365. = SUM ( TAKE ( SORTBY ({ 0 , 15 , 5 , 1 , 15 , 1 , 10 , 1 , 10 , 15 , 12 , 2 , 10 , 7 , 5 , 0 }, { 10 , 9 , 13 , 2 , 11 , 8 , 16 , 14 , 7 , 15 , 5 , 4 , 6 , 1 , 3 , 12 }), 1 , 9 )) What is the result?"
+    },
+    "q-use-github": {
+      "answer": "https://raw.githubusercontent.com/mnarayanar/tds-a1/refs/heads/main/email.json",
+      "question": "Let's make sure you know how to use GitHub. Create a GitHub account if you don't have one. Create a new public repository. Commit a single JSON file called email.json with the value {\"email\": \" miryala.narayanareddy@straive.com \"} and push it. Enter the raw Github URL of email.json so we can verify it. (It might look like https://raw.githubusercontent.com/[GITHUB ID]/[REPO NAME]/main/email.json .)"
+    },
+    "q-use-google-sheets": {
+      "answer": "540",
+      "question": "Let's make sure you can write formulas in Google Sheets. Type this formula into Google Sheets. (It won't work in Excel) = SUM (ARRAY_CONSTRAIN( SEQUENCE ( 100 , 100 , 9 , 10 ), 1 , 10 )) What is the result?"
+    },
+    "q-use-json": {
+      "answer": "[{\"name\": \"Liam\", \"age\": 2}, {\"name\": \"Paul\", \"age\": 10}, {\"name\": \"Charlie\", \"age\": 11}, {\"name\": \"David\", \"age\": 15}, {\"name\": \"Henry\", \"age\": 22}, {\"name\": \"Emma\", \"age\": 39}, {\"name\": \"Karen\", \"age\": 44}, {\"name\": \"Frank\", \"age\": 45}, {\"name\": \"Oscar\", \"age\": 52}, {\"name\": \"Ivy\", \"age\": 54}, {\"name\": \"Alice\", \"age\": 55}, {\"name\": \"Mary\", \"age\": 58}, {\"name\": \"Bob\", \"age\": 85}, {\"name\": \"Jack\", \"age\": 94}, {\"name\": \"Nora\", \"age\": 94}, {\"name\": \"Grace\", \"age\": 98}]",
+      "question": "Let's make sure you know how to use JSON. Sort this JSON array of objects by the value of the age field. In case of a tie, sort by the name field. Paste the resulting JSON below without any spaces or newlines. [ { \"name\" : \"Alice\" , \"age\" : 55 } , { \"name\" : \"Bob\" , \"age\" : 85 } , { \"name\" : \"Charlie\" , \"age\" : 11 } , { \"name\" : \"David\" , \"age\" : 15 } , { \"name\" : \"Emma\" , \"age\" : 39 } , { \"name\" : \"Frank\" , \"age\" : 45 } , { \"name\" : \"Grace\" , \"age\" : 98 } , { \"name\" : \"Henry\" , \"age\" : 22 } , { \"name\" : \"Ivy\" , \"age\" : 54 } , { \"name\" : \"Jack\" , \"age\" : 94 } , { \"name\" : \"Karen\" , \"age\" : 44 } , { \"name\" : \"Liam\" , \"age\" : 2 } , { \"name\" : \"Mary\" , \"age\" : 58 } , { \"name\" : \"Nora\" , \"age\" : 94 } , { \"name\" : \"Oscar\" , \"age\" : 52 } , { \"name\" : \"Paul\" , \"age\" : 10 } ] Sorted JSON:"
+    },
+    "q-uv-http-get": {
+      "answer": "{     \"args\": {         \"email\": \"miryala.narayanareddy@straive.com\"     },     \"headers\": {         \"Accept\": \"*/*\",         \"Accept-Encoding\": \"gzip, deflate\",         \"Host\": \"httpbin.org\",         \"User-Agent\": \"HTTPie/3.2.4\",         \"X-Amzn-Trace-Id\": \"Root=1-67987819-68f3e2b335765aaa3cfd90f6\"     },     \"origin\": \"49.205.250.84, 163.116.219.51\",     \"url\": \"https://httpbin.org/get?email=miryala.narayanareddy%40straive.com\" }",
+      "question": "Running uv run --with httpie -- https [URL] installs the Python package httpie and sends a HTTPS request to the URL. Send a HTTPS request to https://httpbin.org/get with the URL encoded parameter email set to miryala.narayanareddy@straive.com What is the JSON output of the command? (Paste only the JSON body, not the headers)"
+    },
+    "q-vs-code-version": {
+      "answer": "Version:          Code 1.96.4 (cd4ee3b1c348a13bafd8f9ad8060705f6d4b9cba, 2025-01-16T00:16:19.038Z)\nOS Version:       Windows_NT x64 10.0.26100\nCPUs:             AMD Ryzen 5 PRO 7530U with Radeon Graphics      (12 x 1996)\nMemory (System):  14.80GB (6.68GB free)\nVM:               0%\nScreen Reader:    no\nProcess Argv:     --crash-reporter-id 7cb1abbc-0806-4071-90df-891b75f5c994\nGPU Status:       2d_canvas:                              enabled\n                  canvas_oop_rasterization:               enabled_on\n                  direct_rendering_display_compositor:    disabled_off_ok\n                  gpu_compositing:                        enabled\n                  multiple_raster_threads:                enabled_on\n                  opengl:                                 enabled_on\n                  rasterization:                          enabled\n                  raw_draw:                               disabled_off_ok\n                  skia_graphite:                          disabled_off\n                  video_decode:                           enabled\n                  video_encode:                           enabled\n                  vulkan:                                 disabled_off\n                  webgl:                                  enabled\n                  webgl2:                                 enabled\n                  webgpu:                                 enabled\n                  webnn:                                  disabled_off\n\nCPU %   Mem MB     PID  Process\n    0      136   13604  code main\n    0      115    4712  shared-process\n    0      222   10512  window [1] (.gitlab-ci.yml - lexis-nexis-product-recommender - Visual Studio Code)\n    0      114   12484  ptyHost\n    0       15    8660       conpty-agent\n    0       99   13544       C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -noexit -command \"try { . \\\"c:\\Users\\e430271.SPI-GLOBAL\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\out\\vs\\workbench\\contrib\\terminal\\common\\scripts\\shellIntegration.ps1\\\" } catch {}\"\n    0       13   18112         C:\\WINDOWS\\system32\\cmd.exe /c \"\"C:\\Users\\e430271.SPI-GLOBAL\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code.cmd\" -s\"\n    0      116    5588           electron-nodejs (cli.js )\n    0      144   15200             \"C:\\Users\\e430271.SPI-GLOBAL\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe\" -s\n    1      102    5112               gpu-process\n    0      100   15512               utility-network-service\n    0       95   20192               crashpad-handler\n    0      105   13136  fileWatcher [1]\n    0       44   20240     crashpad-handler\n    0       61   20676     utility-network-service\n    0      145   21460     gpu-process\n    0      467   23144  extensionHost [1]\n\nWorkspace Stats:\n|  Window (.gitlab-ci.yml - lexis-nexis-product-recommender - Visual Studio Code)\n|    Folder (lexis-nexis-product-recommender): 6 files\n|      File types: yml(1) json(1) py(1) html(1) md(1)\n|      Conf files:",
+      "question": "Install and run Visual Studio Code. In your Terminal (or Command Prompt), type code -s and press Enter. Copy and paste the entire output below. What is the output of code -s ?"
+    }
+  }
