@@ -4,8 +4,12 @@ from mapping import a1_data  # Ensure this function returns data correctly
 
 app = Flask(__name__)
 
-API_URL = "http://localhost:8000/api/"  # Replace with your actual API URL
+API_URL = "http://localhost:8000/api/"
 
+A1_QUESTIONS = [
+    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", "N/A")}
+    for item in a1_data()
+]
 
 @app.route('/')
 def index():
@@ -14,10 +18,7 @@ def index():
 
 @app.route('/api/get_questions', methods=['GET'])
 def get_questions():
-    questions_data = [
-        {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", "N/A")}
-        for item in a1_data()
-    ]
+    questions_data = A1_QUESTIONS
     return jsonify(questions_data)  # ✅ Proper JSON response
 
 
@@ -25,8 +26,11 @@ def get_questions():
 def send_request():
     q_id = request.form.get("id")
 
-    
-    payload = {"question": q_id}
+    q_data = [item for item in A1_QUESTIONS if item["id"] == q_id][0]
+
+    payload = {"question": q_data["question"]}
+
+    print(payload)
 
     try:
         response = requests.post(API_URL, data=payload)
@@ -35,7 +39,7 @@ def send_request():
         actual_answer = response_data.get("answer")
         # print(actual_answer)
         print(response_data)
-        return jsonify({"response": response_data, "status": "✅ Matches"})
+        return jsonify({"response": response_data["answer"], "status": "✅ Matches"})
         # status = "✅ Matches" if actual_answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {actual_answer}"
 
         return jsonify({"response": response_data, "status": status})

@@ -65,7 +65,8 @@
                 });
                 let data = await response.json();
                 document.getElementById("status-" + id).innerText = data.status;
-                document.getElementById("response").innerText = JSON.stringify(data.response, null, 2);
+                // document.getElementById("response").innerText = JSON.stringify(data.response, null, 2);
+                document.getElementById("response-" + id).innerText = JSON.stringify(data.response, null, 2);
             } catch (error) {
                 document.getElementById("status-" + id).innerText = "Error: " + error;
             }
@@ -89,6 +90,7 @@
                             </button>
                         </td>
                         <td id="status-${q.id}">-</td>
+                        <td id="response-${q.id}">-</td>
                     </tr>
                 `;
                 container.innerHTML += row;
@@ -120,10 +122,11 @@
                 <th>File Path</th>
                 <th>Test</th>
                 <th>Test Status</th>
+                <th>Test Response</th>
             </tr>
         </thead>
         <tbody id="questions-body"></tbody>
     </table>
-    <div id="response"></div>
+    <!-- <div id="response"></div> -->
 </body>
 </html>
