@@ -27,6 +27,9 @@ def a1_data():
 
     files = {
         "q-npx-prettier":   "./mapping/files/README.md",
+        "q-extract-csv-zip": "./mapping/files/q-extract-csv-zip.zip",
+
+        "q-multi-cursor-json": "./mapping/files/q-multi-cursor-json.txt",
     }
 
     data = []

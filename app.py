@@ -4,7 +4,8 @@ from mapping import a1_data  # Ensure this function returns data correctly
 
 app = Flask(__name__)
 
-API_URL = "http://localhost:8000/api/"
+# API_URL = "http://localhost:8000/api/"
+API_URL = "https://tds-solver-sigma.vercel.app/api/"
 
 A1_QUESTIONS = [
     {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", "N/A")}
@@ -30,17 +31,29 @@ def send_request():
 
     payload = {"question": q_data["question"]}
 
+
+# send file to API
+    files = None
+    if q_data.get("filepath"):
+        files = {"file": open(q_data["filepath"], "rb")}
+   
+
     print(payload)
 
     try:
-        response = requests.post(API_URL, data=payload)
+        response = requests.post(API_URL, data=payload, files=files)
         response_data = response.json()
 
-        actual_answer = response_data.get("answer")
-        # print(actual_answer)
-        print(response_data)
-        return jsonify({"response": response_data["answer"], "status": "✅ Matches"})
-        # status = "✅ Matches" if actual_answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {actual_answer}"
+        answer = response_data.get("answer")
+        expected_answer = q_data["answer"]
+
+        if q_id == "q-use-json":
+            import json 
+            expected_answer = json.loads(expected_answer)
+            answer = json.loads(answer)
+    
+
+        status = "✅ Matches" if answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {answer}"
 
         return jsonify({"response": response_data, "status": status})
 

@@ -6,6 +6,3 @@ def q1(s):
     
     return bool(version_match and os_version_match)
 
-
-def q2(s):
-    return "Hello" in s 
