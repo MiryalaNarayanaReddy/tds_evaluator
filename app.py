@@ -100,6 +100,13 @@ def send_request():
                 answer = expected_answer
             else:
                 answer = None
+        elif q_id == "q-llm-embeddings":
+            answer = json.loads(answer)
+            expected_answer = json.loads(expected_answer)
+            if answer == expected_answer:
+                answer = expected_answer
+            else:
+                answer = None
         
 
         status = "✅ Matches" if answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {answer}"
