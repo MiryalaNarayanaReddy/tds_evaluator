@@ -3,130 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A1 Questions</title>
+    <title>Assignments</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
-            padding: 20px;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-            width: 20%;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-        button {
-            padding: 8px 12px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        #response, #status {
-            margin-top: 20px;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+        nav { background: #007bff; padding: 10px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav button { background: white; border: none; padding: 12px 20px; cursor: pointer; font-weight: bold; border-radius: 6px; transition: background 0.3s, color 0.3s; }
+        nav button:hover, nav button.selected { background: #0056b3; color: white; }
+        h2 { text-align: center; color: #333; margin-top: 20px; }
+        .container { width: 90%; margin: 20px auto; overflow-x: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; width: 50px; border: 1px solid #ddd; text-align: center; word-break: break-word; }
+        th { background-color: #007bff; color: white; }
+        button.test-button, button.test-all-button { padding: 8px 12px; background-color: #28a745; color: white; border: none; cursor: pointer; border-radius: 4px; transition: background 0.3s; }
+        button.test-button:hover, button.test-all-button:hover { background-color: #218838; }
+        @media (max-width: 600px) { nav { flex-direction: column; } nav button { width: 90%; } }
     </style>
     <script>
-        async function sendRequest(id) {
-            let formData = new FormData();
-            formData.append("id", id);
-            
-            try {
-                let response = await fetch("/api/send_request", { 
-                    method: "POST", 
-                    body: formData 
-                });
-                let data = await response.json();
-                document.getElementById("status-" + id).innerText = data.status;
-                // document.getElementById("response").innerText = JSON.stringify(data.response, null, 2);
-                document.getElementById("response-" + id).innerText = JSON.stringify(data.response, null, 2);
-            } catch (error) {
-                document.getElementById("status-" + id).innerText = "Error: " + error;
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            let lastIndex = localStorage.getItem("lastAssignmentIndex") || 0;
+            updateSelection(lastIndex);
+            fetchQuestions(lastIndex);
+        });
+
+        function updateSelection(index) {
+            localStorage.setItem("lastAssignmentIndex", index);
+            document.getElementById("assignment-index").innerText = "Assignment " + (parseInt(index) + 1);
+            document.querySelectorAll("nav button").forEach(button => button.classList.remove("selected"));
+            let selectedButton = document.querySelector(`nav button[data-index="${index}"]`);
+            if (selectedButton) selectedButton.classList.add("selected");
         }
 
-        async function fetchQuestions() {
-            let response = await fetch("/api/get_questions");
+        async function fetchQuestions(index) {
+            updateSelection(index);
+            let response = await fetch(`/api/get_questions?index=${index}`);
             let questions = await response.json();
             let container = document.getElementById("questions-body");
             container.innerHTML = "";
-    
+            
             questions.forEach(q => {
                 let row = `
                     <tr>
                         <td>${q.id}</td>
                         <td>${q.question}</td>
                         <td>${q.filepath || 'N/A'}</td>
-                        <td>
-                            <button class="test-button" data-id="${q.id}">
-                                Test
-                            </button>
-                        </td>
+                        <td><button class="test-button" data-id="${q.id}" data-index="${index}">Test</button></td>
                         <td id="status-${q.id}">-</td>
                         <td id="response-${q.id}">-</td>
                     </tr>
                 `;
                 container.innerHTML += row;
             });
-
-            // Attach event listeners to buttons dynamically
+            
+            document.getElementById("test-all-btn").onclick = function () {
+                testAllQuestions(index, questions);
+            };
+            
             document.querySelectorAll(".test-button").forEach(button => {
-                button.addEventListener("click", function() {
-                    sendRequest(this.getAttribute("data-id"));
+                button.addEventListener("click", function () {
+                    sendRequest(this.getAttribute("data-id"), this.getAttribute("data-index"));
                 });
             });
         }
-    
-        function testAll() {
-            document.querySelectorAll(".test-button").forEach(btn => btn.click());
+
+        async function sendRequest(id, index) {
+            let formData = new FormData();
+            formData.append("id", id);
+            try {
+                let response = await fetch(`/api/send_request?index=${index}`, {
+                    method: "POST",
+                    body: formData
+                });
+                let data = await response.json();
+                document.getElementById("status-" + id).innerText = data.status;
+                document.getElementById("response-" + id).innerText = JSON.stringify(data.response, null, 2);
+            } catch (error) {
+                document.getElementById("status-" + id).innerText = "Error: " + error;
+            }
         }
 
-        document.addEventListener("DOMContentLoaded", fetchQuestions);
+        async function testAllQuestions(index, questions) {
+            questions.forEach(q => sendRequest(q.id, index));
+        }
     </script>
 </head>
 <body>
-    <h2>A1 Questions</h2>
-    <button onclick="testAll()">Test All</button>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Question</th>
-                <th>File Path</th>
-                <th>Test</th>
-                <th>Test Status</th>
-                <th>Test Response</th>
-            </tr>
-        </thead>
-        <tbody id="questions-body"></tbody>
-    </table>
-    <!-- <div id="response"></div> -->
+    <nav>
+        <button onclick="fetchQuestions(0)" data-index="0">Assignment 1</button>
+        <button onclick="fetchQuestions(1)" data-index="1">Assignment 2</button>
+    </nav>
+    <h2 id="assignment-index">Assignment 1</h2>
+    <div class="container">
+        <button id="test-all-btn" class="test-all-button">Test All</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Question</th>
+                    <th>File Path</th>
+                    <th>Test</th>
+                    <th>Test Status</th>
+                    <th>Test Response</th>
+                </tr>
+            </thead>
+            <tbody id="questions-body"></tbody>
+        </table>
+    </div>
 </body>
 </html>

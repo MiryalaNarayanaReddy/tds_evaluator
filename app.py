@@ -1,65 +1,83 @@
 from flask import Flask, render_template, request, jsonify
 import requests
-from mapping import a1_data  # Ensure this function returns data correctly
+import json
+from mapping import a1_data, a2_data  # Ensure this function returns data correctly
 
 app = Flask(__name__)
 
 API_URL = "http://localhost:8000/api/"
-# API_URL = "https://tds-solver-sigma.vercel.app/api/"
 
+# Load questions
 A1_QUESTIONS = [
-    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", "N/A")}
+    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", None)}
     for item in a1_data()
 ]
 
+A2_QUESTIONS = [
+    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", None)}
+    for item in a2_data()
+]
+
+# Store assignments in a list
+QUESTIONS_DATA = [A1_QUESTIONS, A2_QUESTIONS]
+
 @app.route('/')
 def index():
-    return render_template("index.html", questions=a1_data())
-
+    return render_template("index.html")
 
 @app.route('/api/get_questions', methods=['GET'])
 def get_questions():
-    questions_data = A1_QUESTIONS
-    return jsonify(questions_data)  # ✅ Proper JSON response
-
+    try:
+        index = int(request.args.get("index", 0))  # Default to A1 if not provided
+        if index < 0 or index >= len(QUESTIONS_DATA):
+            return jsonify({"error": "Invalid index"}), 400
+        return jsonify(QUESTIONS_DATA[index])
+    except ValueError:
+        return jsonify({"error": "Index must be an integer"}), 400
 
 @app.route('/api/send_request', methods=['POST'])
 def send_request():
-    q_id = request.form.get("id")
-
-    q_data = [item for item in A1_QUESTIONS if item["id"] == q_id][0]
-
-    payload = {"question": q_data["question"]}
-
-
-# send file to API
-    files = None
-    if q_data.get("filepath"):
-        files = {"file": open(q_data["filepath"], "rb")}
-   
-
-    print(payload)
-
     try:
+        q_id = request.form.get("id")
+        index = int(request.args.get("index", 0))  # Default to A1 if not provided
+
+        if index < 0 or index >= len(QUESTIONS_DATA):
+            return jsonify({"error": "Invalid index"}), 400
+
+        # Find question by ID
+        q_data = next((item for item in QUESTIONS_DATA[index] if item["id"] == q_id), None)
+
+        if not q_data:
+            return jsonify({"error": "Question not found"}), 404
+
+        payload = {"question": q_data["question"]}
+
+        # Handle file upload
+        files = None
+        if q_data.get("filepath"):
+            try:
+                files = {"file": open(q_data["filepath"], "rb")}
+            except FileNotFoundError:
+                return jsonify({"error": f"File not found: {q_data['filepath']}"}), 400
+
+        # Send request to API
         response = requests.post(API_URL, data=payload, files=files)
         response_data = response.json()
 
+        # Validate response
         answer = response_data.get("answer")
         expected_answer = q_data["answer"]
 
         if q_id == "q-use-json":
-            import json 
             expected_answer = json.loads(expected_answer)
             answer = json.loads(answer)
-    
 
         status = "✅ Matches" if answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {answer}"
 
         return jsonify({"response": response_data, "status": status})
 
     except Exception as e:
-        return jsonify({"response": None, "status": f"❌ Error - {str(e)}"})
-
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
