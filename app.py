@@ -3,6 +3,10 @@ import requests
 import json
 from mapping import a1_data, a2_data, a3_data, a4_data, a5_data  # Ensure this function returns data correctly
 
+from eval_codes.tds_2025_01_ga1 import q1
+from eval_codes.tds_2025_01_ga2 import check_image
+
+
 app = Flask(__name__)
 
 API_URL = "http://localhost:8000/api/"
@@ -83,9 +87,20 @@ def send_request():
         answer = response_data.get("answer")
         expected_answer = q_data["answer"]
 
-        if q_id == "q-use-json":
+        if q_id == "q-vs-code-version":
+            if q1(answer):
+                answer = expected_answer
+            else:
+                answer = None
+        elif q_id == "q-use-json":
             expected_answer = json.loads(expected_answer)
             answer = json.loads(answer)
+        elif q_id == "q-image-compression":
+            if check_image(answer, q_data["filepath"]):
+                answer = expected_answer
+            else:
+                answer = None
+        
 
         status = "✅ Matches" if answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {answer}"
 

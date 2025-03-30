@@ -72,6 +72,11 @@ def a2_data():
     ]
 
     files = {
+        "q-image-compression": "./mapping/a2/shapes.png",
+        "q-use-colab-image-library": "./mapping/a2/lenna.webp",
+
+        "q-vercel-python": "./mapping/a2/q-vercel-python.json",
+        "q-fastapi": "./mapping/a2/q-fastapi.csv",
     }
 
     data = []
@@ -85,8 +90,6 @@ def a2_data():
         })
 
     return data
-
-
 
 def a3_data():
     json_data = json.load(open("./mapping/a3.json"))
