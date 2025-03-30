@@ -4,8 +4,8 @@ from mapping import a1_data  # Ensure this function returns data correctly
 
 app = Flask(__name__)
 
-# API_URL = "http://localhost:8000/api/"
-API_URL = "https://tds-solver-sigma.vercel.app/api/"
+API_URL = "http://localhost:8000/api/"
+# API_URL = "https://tds-solver-sigma.vercel.app/api/"
 
 A1_QUESTIONS = [
     {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", "N/A")}

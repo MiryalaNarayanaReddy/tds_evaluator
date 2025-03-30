@@ -30,6 +30,14 @@ def a1_data():
         "q-extract-csv-zip": "./mapping/files/q-extract-csv-zip.zip",
 
         "q-multi-cursor-json": "./mapping/files/q-multi-cursor-json.txt",
+
+        "q-unicode-data": "./mapping/files/q-unicode-data.zip",
+
+        "q-replace-across-files": "./mapping/files/q-replace-across-files.zip",
+        "q-move-rename-files": "./mapping/files/q-move-rename-files.zip",
+        "q-list-files-attributes": "./mapping/files/q-list-files-attributes.zip",
+        "q-compare-files": "./mapping/files/q-compare-files.zip",
+
     }
 
     data = []
