@@ -108,6 +108,14 @@ def send_request():
             else:
                 answer = None
         
+        elif q_id == "q-generate-addresses-with-llms":
+            answer = json.loads(answer)
+            expected_answer = json.loads(expected_answer)
+            if answer == expected_answer:
+                answer = expected_answer
+            else:
+                answer = None
+        
 
         status = "✅ Matches" if answer == expected_answer else f"❌ Mismatch - Expected: {expected_answer}, Got: {answer}"
 
