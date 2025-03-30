@@ -85,3 +85,102 @@ def a2_data():
         })
 
     return data
+
+
+
+def a3_data():
+    json_data = json.load(open("./mapping/a3.json"))
+    
+    # questions
+    ids = [
+        "q-llm-sentiment-analysis",
+        "q-token-cost",
+        "q-generate-addresses-with-llms",
+        "q-llm-vision",
+        "q-llm-embeddings",
+        "q-embedding-similarity",
+        "q-vector-databases",
+        "q-function-calling",
+        "q-get-llm-to-say-yes",
+    ]
+
+    files = {
+    }
+
+    data = []
+
+    for id in ids:
+        data.append({
+            "id": id,
+            "question": json_data[id]["question"],
+            "filepath": files.get(id, None),
+            "answer": json_data[id]["answer"]
+        })  
+
+    return data
+
+
+def a4_data():
+    json_data = json.load(open("./mapping/a4.json"))
+    
+    # questions
+    ids = [
+        "g-google-sheets-importhtml",
+        "q-scrape-imdb-movies",
+        "q-wikipedia-outline",
+        "q-bbc-weather-api",
+        "q-nominatim-api",
+        "q-hacker-news-search",
+        "q-find-newest-github-user",
+        "q-scheduled-github-actions",
+        "q-extract-tables-from-pdf",
+        "q-pdf-to-markdown",
+    ]
+
+    files = {
+    }
+
+    data = []
+
+    for id in ids:
+        data.append({
+            "id": id,
+            "question": json_data[id]["question"],
+            "filepath": files.get(id, None),
+            "answer": json_data[id]["answer"]
+        })  
+
+    return data
+
+
+def a5_data():
+    json_data = json.load(open("./mapping/a5.json"))
+    
+    # questions    
+    ids = [
+        "q-clean-up-excel-sales-data",
+        "q-clean-up-student-marks",
+        "q-apache-log-requests",
+        "q-apache-log-downloads",
+        "q-clean-up-sales-data",
+        "q-parse-partial-json",
+        "q-extract-nested-json-keys",
+        "q-duckdb-social-media-interactions",
+        "q-transcribe-youtube",
+        "q-image-jigsaw",
+    ]
+
+    files = {
+    }
+
+    data = []
+
+    for id in ids:
+        data.append({
+            "id": id,
+            "question": json_data[id]["question"],
+            "filepath": files.get(id, None),
+            "answer": json_data[id]["answer"]
+        })  
+
+    return data

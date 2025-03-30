@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 import json
-from mapping import a1_data, a2_data  # Ensure this function returns data correctly
+from mapping import a1_data, a2_data, a3_data, a4_data, a5_data  # Ensure this function returns data correctly
 
 app = Flask(__name__)
 
@@ -18,8 +18,23 @@ A2_QUESTIONS = [
     for item in a2_data()
 ]
 
+A3_QUESTIONS = [
+    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", None)}
+    for item in a3_data()
+]    
+
+A4_QUESTIONS = [
+    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", None)}
+    for item in a4_data()
+]
+
+A5_QUESTIONS = [
+    {"id": item["id"], "question": item["question"], "answer": item["answer"], "filepath": item.get("filepath", None)}
+    for item in a5_data()
+]
+
 # Store assignments in a list
-QUESTIONS_DATA = [A1_QUESTIONS, A2_QUESTIONS]
+QUESTIONS_DATA = [A1_QUESTIONS, A2_QUESTIONS, A3_QUESTIONS, A4_QUESTIONS, A5_QUESTIONS]
 
 @app.route('/')
 def index():
