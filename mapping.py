@@ -176,7 +176,7 @@ def a5_data():
     files = {
         "q-clean-up-excel-sales-data": "./mapping/a5/q-clean-up-excel-sales-data.xlsx",
         "q-clean-up-student-marks": "./mapping/a5/q-clean-up-student-marks.txt",
-        
+        "q-apache-log-requests": "./mapping/a5/s-anand.net-May-2024.gz",
     }
 
     data = []
