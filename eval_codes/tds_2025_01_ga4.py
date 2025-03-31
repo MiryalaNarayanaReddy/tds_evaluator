@@ -38,3 +38,50 @@ def q_scrape_imdb_movies(question):
         })
     
     return movies
+
+
+
+def q_bbc_weather_api(question):
+    # Use regex to extract the city name.
+    # This regex looks for 'weather forecast for' followed by a city name (letters and spaces)
+    match = re.search(r"weather forecast for\s+([A-Za-z\s]+)", question, re.IGNORECASE)
+    if not match:
+        return json.dumps({"error": "City not found in the input text."})
+    
+    city = match.group(1).strip()
+    
+    # Retrieve the location ID using the BBC locator service.
+    locator_params = {
+        "api_key": "AGbFAKx58hyjQScCXIYrxuEwJh2W2cmv",
+        "stack": "aws",
+        "locale": "en",
+        "filter": "international",
+        "place-types": "settlement,airport,district",
+        "order": "importance",
+        "s": city,
+        "a": "true",
+        "format": "json"
+    }
+    locator_url = "https://locator-service.api.bbci.co.uk/locations"
+    locator_response = requests.get(locator_url, params=locator_params, verify=False)
+    locator_data = locator_response.json()
+    
+    # Extract the first matching location's ID.
+    try:
+        location_id = locator_data["response"]["results"]["results"][0]["id"]
+    except (KeyError, IndexError):
+        return json.dumps({"error": f"Location ID for city '{city}' could not be found."})
+    
+    # Fetch the weather forecast for the given location.
+    forecast_url = f"https://weather-broker-cdn.api.bbci.co.uk/en/forecast/aggregated/{location_id}"
+    forecast_response = requests.get(forecast_url, verify=False)
+    forecast_data = forecast_response.json()
+    
+    # Build a dictionary mapping each date to its enhanced weather description.
+    forecast = {
+        entry["summary"]["report"]["localDate"]: entry["summary"]["report"]["enhancedWeatherDescription"]
+        for entry in forecast_data.get("forecasts", [])
+    }
+    
+    # Return the result as a JSON-formatted string.
+    return forecast
