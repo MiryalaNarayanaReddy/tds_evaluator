@@ -108,6 +108,7 @@ def a3_data():
     ]
 
     files = {
+        "q-llm-vision": "./mapping/a3/q-llm-vision.png",
     }
 
     data = []
