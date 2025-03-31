@@ -142,6 +142,8 @@ def a4_data():
     ]
 
     files = {
+        "q-extract-tables-from-pdf": "./mapping/a4/q-extract-tables-from-pdf.pdf",
+        "q-pdf-to-markdown": "./mapping/a4/q-pdf-to-markdown.pdf",
     }
 
     data = []

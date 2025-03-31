@@ -1,11 +1,14 @@
 import base64
 from io import BytesIO
 from PIL import Image
+import re
 
 def check_image(base64_string, original_image_path):
     
     # Decode Base64 back to bytes
     try:
+        base64_string = re.sub(r"^data:/image[^,]*,", "", base64_string)
+    
         decoded_data = base64.b64decode(base64_string)
     except Exception as e:
         return {"error": f"Invalid Base64 string: {e}"}

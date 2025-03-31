@@ -12,6 +12,7 @@ from eval_codes.tds_2025_01_ga4 import q_scrape_imdb_movies, q_bbc_weather_api
 app = Flask(__name__)
 
 API_URL = "http://localhost:8000/api/"
+# API_URL="https://tds-solver-sigma.vercel.app/api/"
 
 # Load questions
 A1_QUESTIONS = [
