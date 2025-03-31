@@ -6,6 +6,8 @@ from mapping import a1_data, a2_data, a3_data, a4_data, a5_data  # Ensure this f
 from eval_codes.tds_2025_01_ga1 import q1
 from eval_codes.tds_2025_01_ga2 import check_image
 
+from eval_codes.tds_2025_01_ga4 import q_scrape_imdb_movies
+
 
 app = Flask(__name__)
 
@@ -114,6 +116,13 @@ def send_request():
             if answer == expected_answer:
                 answer = expected_answer
             else:
+                answer = None
+        elif q_id == "q-scrape-imdb-movies":
+            answer = json.loads(answer)
+            expected_answer = q_scrape_imdb_movies(q_data["question"])
+            if answer == expected_answer :
+                answer = expected_answer
+            else:    
                 answer = None
         
 
